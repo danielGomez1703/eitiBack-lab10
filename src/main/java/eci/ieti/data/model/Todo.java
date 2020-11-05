@@ -78,9 +78,11 @@ public class Todo {
     @Override
     public String toString() {
         return "Todo{" +
-                "description='" + description + '\'' +
+                "status = '" + priority  + '\'' +
+                ",description='" + description + '\'' +
                 ", dueDate=" + dueDate +
                 ", responsible=" + responsible +
+                ", fileUrl=" + responsible +
                 '}';
     }
 }

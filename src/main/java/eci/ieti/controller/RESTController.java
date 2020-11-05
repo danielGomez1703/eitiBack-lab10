@@ -21,7 +21,7 @@ import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
+@CrossOrigin("*")
 @RequestMapping("api")
 @RestController
 public class RESTController {
@@ -32,7 +32,7 @@ public class RESTController {
     GridFsTemplate gridFsTemplate;
   
     @Autowired
-    TodoRepository todoRepsitory;
+    TodoRepository todoRepository;
 
     @RequestMapping("/files/{filename}") 
     public ResponseEntity<InputStreamResource> getFileByName(@PathVariable String filename) throws IOException {
@@ -58,21 +58,20 @@ public class RESTController {
         
         gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType());
         logger.info("Imagen cargada de forma exitosa con nombre " + file.getOriginalFilename() );
-        return "/files/"+ file.getOriginalFilename();
+        return "api/files/"+ file.getOriginalFilename();
     }
 
     @CrossOrigin("*")
     @PostMapping("/todo")
     public Todo createTodo(@RequestBody Todo todo) {
-        //TODO implement method
-        return null;
+        todoRepository.insert(todo);
+        return todo;
     }
 
     @CrossOrigin("*")
     @GetMapping("/todo")
     public List<Todo> getTodoList() {
-        //TODO implement method
-        return null;
+        return todoRepository.findAll();
     }
 
 }
